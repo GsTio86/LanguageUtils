@@ -67,8 +67,8 @@ public enum EnumBiome {
 	WINDSWEPT_FOREST(Biome.WINDSWEPT_FOREST, "biome.minecraft.windswept_forest"),
 	WINDSWEPT_GRAVELLY_HILLS(Biome.WINDSWEPT_GRAVELLY_HILLS, "biome.minecraft.windswept_gravelly_hills"),
 	WINDSWEPT_HILLS(Biome.WINDSWEPT_HILLS, "biome.minecraft.windswept_hills"),
-	WOODED_BADLANDS(Biome.WOODED_BADLANDS, "biome.minecraft.wooded_badlands");
-
+	WOODED_BADLANDS(Biome.WOODED_BADLANDS, "biome.minecraft.wooded_badlands"),
+    CHERRY_GROVE(Biome.CHERRY_GROVE, "biome.minecraft.cherry_grove");
     private static final Map<Biome, EnumBiome> lookup = new EnumMap<>(Biome.class);
 
     static {

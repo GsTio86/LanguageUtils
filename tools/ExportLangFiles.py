@@ -11,7 +11,7 @@ import sys
 import shutil
 import zipfile
 
-version_name = input("Version: (1.19.2) : ")
+version_name = input("Version: (1.20.1) : ")
 version_short_name = (version_name.rpartition('.')[0] if version_name.count('.') > 1 else version_name)
 
 try:
