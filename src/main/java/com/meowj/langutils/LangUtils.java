@@ -26,17 +26,12 @@ import java.util.logging.Level;
 public class LangUtils extends JavaPlugin {
 
     public static LangUtils plugin;
-    private static boolean isCauldron = false;
     public FileConfiguration config;
 
     @Override
     public void onEnable() {
         plugin = this;
         this.config = getConfig();
-        if (getServer().getName().contains("Cauldron") || getServer().getName().contains("MCPC")) {
-            isCauldron = true;
-            warn("This API is not designed for Cauldron/KCauldron server, but it should work without problems for VANILLA items/entities. Again, you cannot use this API with items/entities in mods.");
-        }
 
         config.addDefault("FallbackLanguage", "en_us");
         List<String> defaultLang = new ArrayList<>();
@@ -79,12 +74,4 @@ public class LangUtils extends JavaPlugin {
         getLogger().log(Level.WARNING, msg);
     }
 
-    /**
-     * Return true if Cauldron environment is detected
-     *
-     * @return true if Cauldron environment is detected
-     */
-    public boolean isCauldron() {
-        return isCauldron;
-    }
 }

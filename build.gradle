@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        maven { url = "https://maven.minecraftforge.net/" }
+        maven { url = "https://repo.spongepowered.org/repository/maven-public/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "6.0.+", changing: true
+        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
+    }
+}
+
+
+apply plugin: "net.minecraftforge.gradle"
 apply plugin: "java-library"
 apply plugin: "maven-publish"
 
@@ -14,8 +28,8 @@ group = "com.meowj"
 archivesBaseName = "LangUtils-mc$minecraftVersion"
 version = "$majorVersion.$minorVersion.$buildNumber".toString()
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 17
+targetCompatibility = 17
 
 // extra compile warnings
 compileJava {
@@ -30,9 +44,17 @@ repositories {
     maven { name 'Sonatype';    url 'https://oss.sonatype.org/content/groups/public' }
 }
 
+minecraft {
+    mappings channel: 'official', version: '1.20.2'
+}
+
 // default dependencies
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:$minecraftVersion-R0.1-SNAPSHOT"
+    minecraft "net.minecraftforge:forge:1.20.2-48.0.30"
+
+    compileOnly fileTree(dir: 'C:/Libraries/Forge/', include: 'arclight-forge-1.20.1-1.0.1-SNAPSHOT.jar')
+    compileOnly fileTree(dir: 'C:/Libraries/Forge/', include: 'arclight-common.jar')
+
 }
 
 // write javadocs to an external folder which can be served via nginx

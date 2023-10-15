@@ -15,11 +15,14 @@ import com.meowj.langutils.lang.convert.*;
 import com.meowj.langutils.locale.LocaleHelper;
 import org.bukkit.Material;
 import org.bukkit.block.Biome;
+import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R1.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Map;
 
@@ -69,9 +72,17 @@ public class LanguageHelper {
         if (item.getType() == Material.POTION || item.getType() == Material.SPLASH_POTION || item.getType() == Material.LINGERING_POTION || item.getType() == Material.TIPPED_ARROW)
             return EnumPotionEffect.getLocalizedName(item, locale);
         else if (item.getType() == Material.PLAYER_HEAD || item.getType() == Material.PLAYER_WALL_HEAD) // is player's skull
-            return EnumItem.getPlayerSkullName(item, locale);
+            return getPlayerSkullName(item, locale);
 
         return translateToLocal(getItemUnlocalizedName(item), locale);
+    }
+
+    public static String getPlayerSkullName(ItemStack skull, String locale) {
+        SkullMeta meta = (SkullMeta) skull.getItemMeta();
+        if (meta.hasOwner()) {
+            return String.format(LanguageHelper.translateToLocal("block.minecraft.player_head.named", locale),
+                meta.getOwningPlayer().getName());
+        } else return LanguageHelper.translateToLocal("block.minecraft.player_head", locale);
     }
 
     /**
@@ -92,8 +103,8 @@ public class LanguageHelper {
      * @return The unlocalized name. If the item doesn't have a unlocalized name, this method will return the Material of it.
      */
     public static String getItemUnlocalizedName(ItemStack item) {
-        EnumItem enumItem = EnumItem.get(item.getType());
-        return enumItem != null ? enumItem.getUnlocalizedName() : item.getType().toString();
+        net.minecraft.world.item.ItemStack itemStack = CraftItemStack.asNMSCopy(item);
+        return itemStack.getDescriptionId();
     }
 
     /**
@@ -103,6 +114,7 @@ public class LanguageHelper {
      * @return The unlocalized name. If the biome doesn't have a unlocalized name, this method will return the Biome of it.
      */
     public static String getBiomeUnlocalizedName(Biome biome) {
+
         EnumBiome enumBiome = EnumBiome.get(biome);
         return enumBiome != null ? enumBiome.getUnlocalizedName() : biome.toString();
     }
